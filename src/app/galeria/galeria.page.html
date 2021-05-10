@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{title}}</ion-title
+    ><ion-button color="danger" (click)="usuarioSrv.deslogearUsuario()"
+      >Salir</ion-button
+    >
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid *ngFor="let photo of imagenesRT; index as position">
+    <div *ngIf="verFotosLindas==true">
+      <ion-card *ngIf='photo.esLinda=="true"'>
+        <ion-card-header>
+          <ion-card-subtitle>{{photo.usuario}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-item>
+          <ion-img [src]="photo.referencia"></ion-img>
+        </ion-item>
+        <ion-card-content>
+          <div *ngIf="photo.like==false">
+            <ion-icon
+              name="heart-outline"
+              size="large"
+              (click)="cambiarClass(photo)"
+            ></ion-icon>
+          </div>
+          <div *ngIf="photo.like==true">
+            <ion-icon
+              name="heart"
+              size="large"
+              (click)="cambiarClass(photo)"
+            ></ion-icon>
+          </div>
+          Votos:{{photo.votos}}
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngIf="verFotosLindas==false">
+      <ion-card *ngIf='photo.esLinda=="false"'>
+        <ion-card-header>
+          <ion-card-subtitle>{{photo.usuario}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-item>
+          <ion-img [src]="photo.referencia"></ion-img>
+        </ion-item>
+        <ion-card-content>
+          <h3>Votos: {{photo.votoss}}</h3>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-grid>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="addPhotoToGallery()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

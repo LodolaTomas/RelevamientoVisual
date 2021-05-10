@@ -1,0 +1,78 @@
+<ion-header class="tituloLogin">
+  <h2 style="text-align: center; margin-top: 50px">Relevamiento Visual</h2>
+</ion-header>
+<ion-content [fullscreen]="true" padding class="background">
+  <div class="login card">
+    <p class="aligncenter"></p>
+    <div class="card-body">
+      <form novalidate (ngSubmit)="onLogin()" [formGroup]="userForm">
+        <fieldset>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Correo</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="Correo Electronico"
+              formControlName="email"
+              [class]="isValidField('email')"
+            />
+            <div class="invalid-feedback" style="font-family: sans-serif;">
+              <span *ngIf="userForm.get('email').errors?.required">
+                Por Favor Ingrese su Correo
+              </span>
+              <span *ngIf="userForm.get('email').errors?.pattern">
+                Ingrese un Correo Valido   
+                Ejemplo: 'Correo@correo.com'
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Contraseña"
+              formControlName="password"
+              [class]="isValidField('password')"
+            />
+            <div class="invalid-feedback" style="font-family: sans-serif;">
+              <span *ngIf="userForm.get('password').errors?.required">
+                Por Favor ingrese una Contraseña
+              </span>
+              <span *ngIf="userForm.get('password').errors?.minlength">
+                La contraseña debe tener mas de 5 caracteres
+              </span>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary btn-block "
+            [disabled]="userForm.invalid"
+          >
+            Ingresar
+          </button>
+          <div class="btn-group btn-block">
+          <button
+            type="button"
+            class="btn btn-dark "
+            data-toggle="dropdown" 
+          >
+            Inicio Rapido
+          </button>
+          <div class="dropdown-menu bg-dark btn-block" id="drop1">
+            <div class="container">
+            <button type="button" class="btn btn-primary rounded-pill btn-block" (click)="LoginAdmin()">Admin</button>
+            <button type="button" class="btn btn-secondary rounded-pill btn-block" (click)="LoginInvitado()">Invitado</button>
+            <button type="button" class="btn btn-success rounded-pill btn-block" (click)="LoginUsuario()">Usuario</button>
+            <button type="button" class="btn btn-danger rounded-pill btn-block" (click)="LoginAnonimo()">Anonimo</button>
+            <button type="button" class="btn btn-warning rounded-pill btn-block" (click)="LoginTester ()">Tester</button>
+          </div>
+          </div>
+        </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</ion-content>

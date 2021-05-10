@@ -1,0 +1,99 @@
+ion-button {
+  color: white;
+  font-weight: bolder;
+  font-size: 100%;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-shadow: 2px 0 0 #000000, -2px 0 0 #000000, 0 2px 0 #000000,
+    0 -2px 0 #000000, 1px 1px #000000, -1px -1px 0 #000000, 1px -1px 0 #000000,
+    -1px 1px 0 #000000;
+}
+h2{
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+ion-grid {
+  height: 100%;
+  margin: 0 !important;
+  padding: 0;
+}
+
+ion-row {
+  height: 50%;
+  margin: 0;
+  padding: 0;
+}
+
+ion-col {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.botonLindo {
+    border: solid rgb(0, 0, 0) 2px;
+    border-radius: 2px;
+  animation: slidebonito 30s infinite;
+}
+
+.botonFeo {
+    border-radius: 2px;
+    border: solid rgb(0, 0, 0) 2px;
+    animation: slidefeo 30s infinite;
+}
+
+@keyframes slidebonito {
+  0%,25% {
+    background: url("../../assets/img/cosaslindas/cosalinda1.jpg");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  50% {
+    background-image: url("../../assets/img/cosaslindas/cosalinda2.jpg");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  75% {
+    background-image: url("../../assets/img/cosaslindas/cosalinda3.png");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  100% {
+    background-image: url("../../assets/img/cosaslindas/cosalinda4.jpg");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+
+@keyframes slidefeo {
+    0%,25% {
+      background: url("../../assets/img/cosasfeas/cosafea1.jpeg");
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    50% {
+      background-image: url("../../assets/img/cosasfeas/cosafea2.jfif");
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    75% {
+      background-image: url("../../assets/img/cosasfeas/cosafea3.jpg");
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    100% {
+      background-image: url("../../assets/img/cosasfeas/cosafea4.jpg");
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
