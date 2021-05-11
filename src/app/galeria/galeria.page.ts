@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PhotoService } from '../services/photo.service';
 import { UsuariosService } from '../services/usuarios.service';
-import { map } from 'rxjs/operators';
-import { computeStackId } from '@ionic/angular/directives/navigation/stack-utils';
+import { Usuario } from '../models/usuario';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 @Component({
   selector: 'app-galeria',
@@ -14,7 +14,7 @@ export class GaleriaPage implements OnInit {
   title;
   verFotosLindas: boolean;
   imagenesRT: any[];
-  class = 'heart-outline';
+  flag = false;
   constructor(private router: Router, public photoService: PhotoService, public usuarioSrv: UsuariosService) {
     if (this.router.url === '/lista/cosasLindas') {
       this.title = 'Cosas Lindas';
@@ -23,42 +23,63 @@ export class GaleriaPage implements OnInit {
       this.title = 'Cosas Feas';
       this.verFotosLindas = false
     }
-    this.imagenesRT = this.photoService.ObtenerTodos();
+    this.imagenesRT = this.photoService.ObtenerTodos().reverse();
   }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.imagenesRT.reverse()
+    }, 1550);
+    if (this.flag == true) {
+
+    }
   }
 
   doRefresh(event) {
     setTimeout(() => {
       this.imagenesRT.splice(0, this.imagenesRT.length)
       this.imagenesRT = this.photoService.ObtenerTodos();
-      console.log(this.imagenesRT)
+      this.imagenesRT.reverse()
       event.target.complete();
-    }, 2000);
-  }
-  async fotoDes() {
-    this.imagenesRT.splice(0, this.imagenesRT.length)
-    this.imagenesRT = await this.photoService.ObtenerTodos()
-
+    }, 1000);
   }
 
   addPhotoToGallery() {
-    this.photoService.sacarFoto();
+    this.photoService.sacarFoto().then((val) => {
+      this.flag = true
+    });
   }
-
-  public cambiarClass(unaFoto) {
+  public cambiarFoto(unaFoto): string {
+    let retorno = 'heart-outline';
+    let user = <Usuario>JSON.parse(localStorage.getItem('user'));
     this.imagenesRT.forEach(function (unaImagen) {
       if (unaImagen.referencia == unaFoto.referencia) {
-        if (unaImagen.like == true) {
-          unaFoto.like = false;
-          unaFoto.votos--;
-        } else {
-          unaFoto.like = true;
-          unaFoto.votos++;
-        }
+        unaImagen.like.forEach(element => {
+          if (element == user.correo) {
+            retorno = 'heart';
+          }
+        });
       }
     })
-    console.log(this.photoService.modificarFoto(unaFoto, unaFoto.id));
+    return retorno;
+  }
+  public setLike(unaFoto) {
+    let user = <Usuario>JSON.parse(localStorage.getItem('user'));
+        for (let index = 0; index < unaFoto.like.length; index++) {
+          var i = unaFoto.like.indexOf(user.correo);
+          if (i==-1) {
+              console.log("eaaa di like perry")
+              unaFoto.votos++;
+              unaFoto.like.push(user.correo);
+              break;
+          }
+          if (i>-1) {
+            unaFoto.votos--;
+            unaFoto.like.splice(i, 1);
+            console.log(unaFoto.like)
+            break;
+          }
+        }
+    this.photoService.modificarFoto(unaFoto, unaFoto.id)
   }
 }

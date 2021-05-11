@@ -11,7 +11,7 @@ const { Camera } = Plugins;
 export class PhotoService {
   imagenes: any[];
   misImagenes:any[]=[];
-  linda:string=localStorage.getItem('lindo');
+  linda:string;
   user:Usuario=<Usuario>JSON.parse(localStorage.getItem('user'));
   rutaDeLaColeccion="/fotos";
   referenciaAlaColeccion:AngularFireList<any>
@@ -45,11 +45,13 @@ export class PhotoService {
     let storage = firebase.default.storage();
     let storageRef = storage.ref();
     let spaceRef = storageRef.child(pReferencia);//bueno hay q ser sinceros.. hay pasos que desconozco que hacen pero funciona asiq para adelante
-
+    let array:string[]=['tomaslodola1@gmail.com']
     spaceRef.getDownloadURL().then(url => {
       debugger;
       let messagesRef = firebase.default.database().ref().child("fotos");
-      messagesRef.push({ esLinda:this.linda, usuario: this.user.correo, votos:0, referencia: url,like:false});//guardo en el realtime la referencia a la foto y mas datos
+      this.linda=localStorage.getItem('lindo');
+      console.log(this.linda)
+      messagesRef.push({ esLinda:this.linda, usuario: this.user.correo, votos:0, referencia: url,like:array});//guardo en el realtime la referencia a la foto y mas datos
     });
   }
 
@@ -59,7 +61,7 @@ export class PhotoService {
     misFotos.on('child_added',datos=>{
       this.misImagenes.push({id:datos.key, esLinda:datos.child("esLinda").val(), usuario:datos.child("usuario").val(),  votos:datos.child("votos").val(), referencia:datos.child("referencia").val(), like:datos.child("like").val()});
     })
-    return this.misImagenes.reverse();
+    return this.misImagenes;
   }
 
   modificarFoto(foto:any,id){

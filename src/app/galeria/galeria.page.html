@@ -1,9 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{title}}</ion-title
-    ><ion-button color="danger" (click)="usuarioSrv.deslogearUsuario()"
-      >Salir</ion-button
-    >
+    <div class="row">
+      <div class="col text-left">
+        <ion-title>{{title}} </ion-title>
+      </div>
+      <div class="col text-right">
+        <ion-button
+          color="danger"
+          (click)="usuarioSrv.deslogearUsuario()"
+          float-right
+          >Salir</ion-button
+        >
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -21,20 +30,11 @@
           <ion-img [src]="photo.referencia"></ion-img>
         </ion-item>
         <ion-card-content>
-          <div *ngIf="photo.like==false">
-            <ion-icon
-              name="heart-outline"
-              size="large"
-              (click)="cambiarClass(photo)"
-            ></ion-icon>
-          </div>
-          <div *ngIf="photo.like==true">
-            <ion-icon
-              name="heart"
-              size="large"
-              (click)="cambiarClass(photo)"
-            ></ion-icon>
-          </div>
+          <ion-icon
+          [name]="cambiarFoto(photo)"
+            size="large"
+            (click)="setLike(photo)"
+          ></ion-icon>
           Votos:{{photo.votos}}
         </ion-card-content>
       </ion-card>
@@ -48,7 +48,12 @@
           <ion-img [src]="photo.referencia"></ion-img>
         </ion-item>
         <ion-card-content>
-          <h3>Votos: {{photo.votoss}}</h3>
+          <ion-icon
+          [name]="cambiarFoto(photo)"
+            size="large"
+            (click)="setLike(photo)"
+          ></ion-icon>
+          Votos:{{photo.votos}}
         </ion-card-content>
       </ion-card>
     </div>
